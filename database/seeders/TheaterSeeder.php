@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Genre;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class GenreSeeder extends Seeder
+class TheaterSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,18 +14,18 @@ class GenreSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('genres')->insert([
+        DB::table('theaters')->insert([
             [
                 'id' => 1,
-                'name' => 'Horror',
+                'name' => 'GSC',
             ],
             [
                 'id' => 2,
-                'name' => 'Romance',
+                'name' => 'TGV',
             ],
             [
                 'id' => 3,
-                'name' => 'Action',
+                'name' => 'MBO',
             ],
         ]);
     }

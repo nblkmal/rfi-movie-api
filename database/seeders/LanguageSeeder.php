@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Genre;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class GenreSeeder extends Seeder
+class LanguageSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,18 +14,18 @@ class GenreSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('genres')->insert([
+        DB::table('languages')->insert([
             [
                 'id' => 1,
-                'name' => 'Horror',
+                'name' => 'Bahasa Melayu',
             ],
             [
                 'id' => 2,
-                'name' => 'Romance',
+                'name' => 'English',
             ],
             [
                 'id' => 3,
-                'name' => 'Action',
+                'name' => 'Korean',
             ],
         ]);
     }
