@@ -23,11 +23,9 @@ class CreateMoviesTable extends Migration
             $table->string('d_date')->nullable();
             $table->string('r_date')->nullable();
 
-            $table->unsignedInteger('genre_id');
-            $table->foreign('genre_id')->references('id')->on('genres');
-            $table->unsignedInteger('theater_id');
+            $table->unsignedInteger('theater_id')->nullable();
             $table->foreign('theater_id')->references('id')->on('theaters');
-            $table->unsignedInteger('language_id');
+            $table->unsignedInteger('language_id')->nullable();
             $table->foreign('language_id')->references('id')->on('languages');
 
             $table->string('release')->nullable();
