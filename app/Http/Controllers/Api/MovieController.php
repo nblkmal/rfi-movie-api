@@ -150,7 +150,7 @@ class MovieController extends Controller
 
     public function getNewMovies(Request $request)
     {
-        $movies = Movie::with('genre', 'theater', 'language');
+        $movies = Movie::with('genres', 'theater', 'language');
 
         $r_date = $request->r_date;
 
@@ -163,7 +163,7 @@ class MovieController extends Controller
             'name' => 'New Movies',
             'status' => true,
             'message' => 'Sucessfully fetch new movies',
-            'data' => $movies,
+            'data' => $movies->get(),
         ], 200);
     }
 
