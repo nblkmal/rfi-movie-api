@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Genre;
 use App\Models\Theater;
 use App\Models\Language;
+use App\Models\Performer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -40,5 +41,10 @@ class Movie extends Model
     public function language()
     {
         return $this->belongsTo(Language::class, 'language_id');
+    }
+
+    public function performers()
+    {
+        return $this->belongsToMany(Performer::class, 'movie_performers');
     }
 }
