@@ -28,9 +28,9 @@ class Movie extends Model
         'length',
     ];
 
-    public function genre()
+    public function genres()
     {
-        return $this->belongsTo(Genre::class, 'genre_id');
+        return $this->belongsToMany(Genre::class, 'genre_movies');
     }
 
     public function theater()
