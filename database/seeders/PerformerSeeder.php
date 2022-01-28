@@ -21,7 +21,7 @@ class PerformerSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'name' => 'Rober Downey JR',
+                'name' => 'Robert Downey JR',
             ],
             [
                 'id' => 3,
