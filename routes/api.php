@@ -25,8 +25,8 @@ Route::prefix('v1')->group(function()
     Route::get('/timeslot', [MovieController::class, 'getTimeSlot']);
     Route::get('/specific_movie_theater', [MovieController::class, 'getSpecificMovieTheater']);
     Route::get('/search_performer', [MovieController::class, 'getSearchPerformer']);
-    Route::post('/give_rating', [MovieController::class, 'index']);
-    Route::get('/new_movies', [MovieController::class, 'index']);
-    Route::post('/add_movie', [MovieController::class, 'index']);
+    Route::post('/give_rating', [MovieController::class, 'postRating']);
+    Route::get('/new_movies', [MovieController::class, 'getNewMovies']);
+    Route::post('/add_movie', [MovieController::class, 'postMovie']);
 });
 
