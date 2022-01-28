@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Rate;
 use App\Models\User;
+use App\Models\Genre;
 use App\Models\Movie;
+use App\Models\Director;
 use App\Models\Performer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\MovieRequest;
 use App\Http\Requests\Api\RatingRequest;
 
 class MovieController extends Controller
@@ -21,7 +24,7 @@ class MovieController extends Controller
         if($genre)
         {
             $movies = Movie::with('genre', 'theater', 'language')->whereHas('genre', function($query) use($genre) {
-                $query->where('name', $genre);
+                $query->where('name','LIKE','%'.$genre.'%');
                 return $query;
             })->get();
         }
@@ -145,24 +148,68 @@ class MovieController extends Controller
         ], 200);
     }
 
-    public function getNewMovies()
+    public function getNewMovies(Request $request)
     {
-        
+        $movies = Movie::with('genre', 'theater', 'language');
+
+        $r_date = $request->r_date;
+
+        if($r_date)
+        {
+            $movies->where('r_date', '<=', $r_date)->get()->sortBy('r_date');
+        }
+
         return response()->json([
             'name' => 'New Movies',
             'status' => true,
             'message' => 'Sucessfully fetch new movies',
-            'data' => $performer->get(),
+            'data' => $movies,
         ], 200);
     }
 
-    public function postMovie()
+    public function postMovie(MovieRequest $request)
     {
+        $genres = $request->genre;
+        $performers = $request->performer;
+
+        $movie = Movie::create([
+            'title' => $request->title,
+            'release' => $request->release,
+            'length' => $request->length,
+            'description' => $request->description,
+            'mpaa_rating' => $request->mpaa_rating,
+            'director' => $request->director,
+        ]);
+
+        if($genres)
+        {
+            foreach($genres as $genre)
+            {
+                $gen = Genre::firstOrCreate([
+                    'name' => $genre,
+                ]);
+                
+                $movie->genres()->attach($gen);   
+            }
+        }
+
+        if($performers)
+        {
+            foreach($performers as $performer)
+            {
+                $per = Performer::firstOrCreate([
+                    'name' => $performer,
+                ]);
+                
+                $movie->performers()->attach($per);
+            }
+        }
+
         return response()->json([
             'name' => 'Add movie',
             'status' => true,
             'message' => 'Sucessfully add new movie',
-            'data' => $performer->get(),
+            'data' => $movie,
         ], 200);
     }
 }
