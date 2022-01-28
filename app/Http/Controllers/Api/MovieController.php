@@ -59,7 +59,63 @@ class MovieController extends Controller
         return response()->json([
             'name' => 'TimeSlot',
             'status' => true,
-            'message' => 'Sucessfully fetch movies with genre '.$request->genre,
+            'message' => 'Sucessfully fetch movies',
+            'data' => $movies->get(),
+        ], 200);
+    }
+
+    public function getSpecificMovieTheater(Request $request)
+    {
+        $movies = Movie::with('genre', 'theater', 'language');
+
+        $theater_name = $request->theater_name;
+        $d_date = $request->d_date;
+
+        if($theater_name)
+        {
+            $movies->whereHas('theater', function($query) use($theater_name) {
+                $query->where('name', $theater_name);
+                return $query;
+            });
+        }
+
+        if($d_date)
+        {
+            $movies->where('d_date', $d_date);
+        }
+
+        return response()->json([
+            'name' => 'Specif Movie Theater',
+            'status' => true,
+            'message' => 'Sucessfully fetch movies',
+            'data' => $movies->get(),
+        ], 200);
+    }
+
+    public function getSearchPerformer(Request $request)
+    {
+        $movies = Movie::with('genre', 'theater', 'language');
+
+        $theater_name = $request->theater_name;
+        $d_date = $request->d_date;
+
+        if($theater_name)
+        {
+            $movies->whereHas('theater', function($query) use($theater_name) {
+                $query->where('name', $theater_name);
+                return $query;
+            });
+        }
+
+        if($d_date)
+        {
+            $movies->where('d_date', $d_date);
+        }
+
+        return response()->json([
+            'name' => 'Search Performer',
+            'status' => true,
+            'message' => 'Sucessfully fetch movies',
             'data' => $movies->get(),
         ], 200);
     }
