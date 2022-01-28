@@ -17,29 +17,29 @@ class MovieController extends Controller
 {
     public function getGenre(Request $request)
     {
-        $movies = Movie::with('genre')->get();
+        $movies = Movie::with('genres', 'theater', 'language');
 
         $genre = $request->genre;
 
         if($genre)
         {
-            $movies = Movie::with('genre', 'theater', 'language')->whereHas('genre', function($query) use($genre) {
+            $movies->whereHas('genres', function($query) use($genre) {
                 $query->where('name','LIKE','%'.$genre.'%');
                 return $query;
-            })->get();
+            });
         }
 
         return response()->json([
             'name' => 'Genre',
             'status' => true,
             'message' => 'Sucessfully fetch movies with genre '.$request->genre,
-            'data' => $movies,
+            'data' => $movies->get(),
         ], 200);
     }
 
     public function getTimeSlot(Request $request)
     {
-        $movies = Movie::with('genre', 'theater', 'language');
+        $movies = Movie::with('genres', 'theater', 'language');
 
         $theater_name = $request->theater_name;
         $time_start = $request->time_start;
@@ -73,7 +73,7 @@ class MovieController extends Controller
 
     public function getSpecificMovieTheater(Request $request)
     {
-        $movies = Movie::with('genre', 'theater', 'language');
+        $movies = Movie::with('genres', 'theater', 'language');
 
         $theater_name = $request->theater_name;
         $d_date = $request->d_date;
